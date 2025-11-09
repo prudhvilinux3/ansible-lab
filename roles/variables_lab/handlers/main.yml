@@ -1,0 +1,6 @@
+---
+# handlers file for roles/variables_lab
+- name: restart web 
+  service: 
+    name: "{{ 'apache2' if ansible_os_family == 'Debian' else 'httpd' }}"
+    state: restarted 

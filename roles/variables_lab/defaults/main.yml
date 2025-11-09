@@ -1,0 +1,4 @@
+---
+# defaults file for roles/variables_lab
+web_root: /var/www/html
+

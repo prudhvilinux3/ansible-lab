@@ -1,0 +1,31 @@
+---
+# tasks file for roles/variables_lab
+- name: Gathered facts
+  debug:
+    msg: "Running on {{ ansible_os_family }} for the host {{ inventory_hostname }} "
+
+- name: Install the apache package if Debian OS 
+  ansible.builtin.apt: 
+    name: apache2
+    state: present 
+  when:  ansible_os_family   == "Debian"  
+
+- name: Install the http package if OS is Non-Debian like centos/redhat
+  ansible.builtin.dnf:
+    name: httpd
+    state: present 
+  when: ansible_os_family != "Debian" 
+
+- name: Ensure web_root exists
+  file:
+    path: "{{ web_root }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Deploy index.html template
+  template:
+    src: index.html.j2
+    dest: "{{ web_root }}/index.html"
+  notify: restart web

@@ -1,0 +1,7 @@
+---
+- name: Variables & Facts Lab - configure webservers
+  hosts: aws
+  become: true
+  roles:
+    - variables_lab
+
